@@ -1,4 +1,8 @@
-import win32com.client
+try:
+    import win32com.client
+except ImportError:
+    print("doesn't look like you have win32com installed.  installing now!  Please re-open DlpSleuth once it finishes installing.")
+    os.system("pip3 install pypiwin32")
 import os,sys
 import datetime
 

@@ -14,7 +14,7 @@ try:
     from PyQt5 import QtCore, QtGui, QtWidgets
     from PyQt5.QtWidgets import *
 except:
-    print("doesn't look like pyqt5 is installed.  installing now!")
+    print("doesn't look like pyqt5 is installed.  installing now!  Please re-open DlpSleuth once it finishes installing.")
     os.system("pip3 install pyqt5")
 from pathlib import Path
 createfile=open("found_data.txt","w")
