@@ -37,7 +37,7 @@ except:
 """
 
 
-f=open("mytext.txt", "a+")
+f=open("mytext.txt", "a+", encoding='utf-8')
 
 mylist=[]
 ext = (".txt", ".csv", ".pdf", ".xlsx", ".docx", ".doc", \
@@ -52,7 +52,7 @@ for root, dirs, files in os.walk(chosendirectory, topdown=True):
       
         if name.endswith(tuple(ext)):
             try:
-                with open(os.path.join(root, name), "r") as auto:
+                with open(os.path.join(root, name), "rb") as auto:
                 #auto=unidecode(str(auto))
                     print (auto) 
                     
@@ -60,30 +60,30 @@ for root, dirs, files in os.walk(chosendirectory, topdown=True):
 						
                         if ssnchecked=="checked":
                             #SSN LOOKUP
-                            ssnsearch=re.search(r'\d\d\d-\d\d-\d\d\d\d', readthelines) 
-                            ssnsearch=re.search(r'\d\d\d\d\d\d\d\d\d', readthelines) 
+                            ssnsearch=re.search(rb'[1-9]\d\d-\d\d-\d\d\d\d', readthelines) 
+                            ssnsearch2=re.search(rb'[1-9]\d\d\d\d\d\d\d\d', readthelines) 
                         else:
                             ssnsearch=False
-						
+                           						
                         if ccnchecked=="checked":
                             #CCN LOOKUP
                             #info on regex here: http://regexlib.com/Search.aspx?k=credit&c=-1&m=-1&ps=20
-                            ccnsearch=re.search(r'^3(?:[47]\d([ -]?)\d{4}(?:\1\d{4}){2}|0[0-5]\d{11}|[68]\d{12})$|^4(?:\d\d\d)?([ -]?)\d{4}(?:\2\d{4}){2}$|^6011([ -]?)\d{4}(?:\3\d{4}){2}$|^5[1-5]\d\d([ -]?)\d{4}(?:\4\d{4}){2}$|^2014\d{11}$|^2149\d{11}$|^2131\d{11}$|^1800\d{11}$|^3\d{15}$', readthelines) 
+                            ccnsearch=re.search(rb'^3(?:[47]\d([ -]?)\d{4}(?:\1\d{4}){2}|0[0-5]\d{11}|[68]\d{12})$|^4(?:\d\d\d)?([ -]?)\d{4}(?:\2\d{4}){2}$|^6011([ -]?)\d{4}(?:\3\d{4}){2}$|^5[1-5]\d\d([ -]?)\d{4}(?:\4\d{4}){2}$|^2014\d{11}$|^2149\d{11}$|^2131\d{11}$|^1800\d{11}$|^3\d{15}$', readthelines) 
                         else:
                             ccnsearch=False
 							
                         if passwordschecked=="checked":
                             #PASSWORD LOOKUP
                             #info on regex here: http://regexlib.com/Search.aspx?k=password&c=-1&m=-1&ps=20
-                            passwordssearch=re.search(r'(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$', readthelines) 
+                            passwordssearch=re.search(rb'(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$', readthelines) 
                         else:
                             passwordssearch=False
 							
-                        if ccnsearch and ccnchecked=="checked" or ssnsearch and ssnchecked=="checked" or passwordssearch and passwordschecked=="checked":
-                            fullpath=os.path.join(root, name)+" - " +"content of document: "+readthelines
+                        if ccnsearch and ccnchecked=="checked" or ssnsearch and ssnchecked=="checked" or ssnsearch2 and ssnchecked=="checked" or passwordssearch and passwordschecked=="checked":
+                            fullpath=os.path.join(root, name)+" - " +"content of document: "+str(readthelines)
                             mylist.append(fullpath.rstrip())
                             #mylist.append("document content: "+readthelines.rstrip()) #actual content of document
-                            print(readthelines)
+                            print(str(readthelines))
                             
             
             except IOError as e:
