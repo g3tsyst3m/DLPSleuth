@@ -52,14 +52,16 @@ for root, dirs, files in os.walk(chosendirectory, topdown=True):
       
         if name.endswith(tuple(ext)):
             try:
-                with open(os.path.join(root, name), "r", errors='ignore') as auto:
-                    #auto=unidecode(str(auto))
-                    print (auto)
+                with open(os.path.join(root, name), "r") as auto:
+                #auto=unidecode(str(auto))
+                    print (auto) 
+                    
                     for readthelines in auto:
 						
                         if ssnchecked=="checked":
                             #SSN LOOKUP
                             ssnsearch=re.search(r'\d\d\d-\d\d-\d\d\d\d', readthelines) 
+                            ssnsearch=re.search(r'\d\d\d\d\d\d\d\d\d', readthelines) 
                         else:
                             ssnsearch=False
 						
@@ -82,6 +84,7 @@ for root, dirs, files in os.walk(chosendirectory, topdown=True):
                             mylist.append(fullpath.rstrip())
                             #mylist.append("document content: "+readthelines.rstrip()) #actual content of document
                             print(readthelines)
+                            
             
             except IOError as e:
                 print ("I/O error({0}): {1}".format(e.errno, e.strerror))		

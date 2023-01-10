@@ -1,9 +1,10 @@
+import os,sys
 try:
     import win32com.client
-except ImportError:
+except:
     print("doesn't look like you have win32com installed.  installing now!  Please re-open DlpSleuth once it finishes installing.")
     os.system("pip3 install pypiwin32")
-import os,sys
+
 import datetime
 
 #clear email textfile
@@ -67,10 +68,16 @@ for message in messages:
     thedate=message.LastModificationTime
     subject = message.subject.encode('ascii', 'ignore').decode('ascii')
     body_content = message.body
+    body_content = body_content.strip()
     #attachments = message.attachments
     body_content=body_content.encode('ascii', 'ignore').decode('ascii')
     print (thedate,subject,body_content)
-    f.write("Date:%s Subject:%s Body_Content:\n %s \n" % (thedate, subject, body_content))
+    #f.write("Date:%s Subject:%s Body_Content:%s \n" % (thedate, subject, body_content))
+    f.write("-----Begin Email-----"+"\r\n\r\n")
+    f.write("Date: " + str(thedate) + " | ")
+    f.write("Subject: " + str(subject) + " | ")
+    f.write("Body: " + str(body_content))
+    f.write("-----End of Email-----"+"\r\n\r\n")
     
 
     count=count+1
