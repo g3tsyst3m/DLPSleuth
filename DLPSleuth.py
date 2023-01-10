@@ -24,8 +24,13 @@ selected="nope"
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(658, 580)
-        Form.setMaximumSize(QtCore.QSize(658, 580))
+        Form.resize(1100, 800)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        #Form.setMaximumSize(QtCore.QSize(1000, 1000))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/newPrefix/deelight-Magnifying-Glass-transparent-square-300px.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
@@ -39,12 +44,12 @@ class Ui_Form(object):
 "border-color: rgb(10, 22, 255);")
         self.label_2.setObjectName("label_2")
         self.checkBox = QtWidgets.QCheckBox(Form)
-        self.checkBox.setGeometry(QtCore.QRect(490, 340, 111, 17))
+        self.checkBox.setGeometry(QtCore.QRect(490, 340, 121, 17))
         self.checkBox.setStyleSheet("background-color: rgb(6, 255, 68);\n"
 "font: 75 8pt \"MS Shell Dlg 2\";")
         self.checkBox.setObjectName("checkBox")
         self.label_3 = QtWidgets.QLabel(Form)
-        self.label_3.setGeometry(QtCore.QRect(350, 390, 261, 20))
+        self.label_3.setGeometry(QtCore.QRect(600, 390, 361, 20))
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(Form)
         self.label_4.setGeometry(QtCore.QRect(10, 40, 651, 351))
@@ -59,7 +64,7 @@ class Ui_Form(object):
         self.pushButton.setText("")
         self.pushButton.setObjectName("pushButton")
         self.listWidget = QtWidgets.QListWidget(Form)
-        self.listWidget.setGeometry(QtCore.QRect(10, 410, 311, 161))
+        self.listWidget.setGeometry(QtCore.QRect(10, 410, 511, 361))
         self.listWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.listWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.listWidget.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked|QtWidgets.QAbstractItemView.EditKeyPressed|QtWidgets.QAbstractItemView.SelectedClicked)
@@ -68,14 +73,14 @@ class Ui_Form(object):
         self.listWidget.setWordWrap(True)
         self.listWidget.setObjectName("listWidget")
         self.label_6 = QtWidgets.QLabel(Form)
-        self.label_6.setGeometry(QtCore.QRect(80, 390, 161, 16))
+        self.label_6.setGeometry(QtCore.QRect(80, 390, 261, 16))
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(Form)
         self.label_7.setGeometry(QtCore.QRect(490, 290, 121, 16))
         self.label_7.setStyleSheet("background-color: rgb(255, 255, 0);")
         self.label_7.setObjectName("label_7")
         self.listWidget_2 = QtWidgets.QListWidget(Form)
-        self.listWidget_2.setGeometry(QtCore.QRect(330, 410, 311, 161))
+        self.listWidget_2.setGeometry(QtCore.QRect(530, 410, 511, 361))
         self.listWidget_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.listWidget_2.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.listWidget_2.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked|QtWidgets.QAbstractItemView.EditKeyPressed|QtWidgets.QAbstractItemView.SelectedClicked)
@@ -83,7 +88,7 @@ class Ui_Form(object):
         self.listWidget_2.setWordWrap(True)
         self.listWidget_2.setObjectName("listWidget_2")
         self.checkBox_2 = QtWidgets.QCheckBox(Form)
-        self.checkBox_2.setGeometry(QtCore.QRect(490, 310, 151, 20))
+        self.checkBox_2.setGeometry(QtCore.QRect(490, 310, 150, 20))
         self.checkBox_2.setStatusTip("")
         self.checkBox_2.setStyleSheet("background-color: rgb(6, 255, 68);\n"
 "font: 75 8pt \"MS Shell Dlg 2\";")
@@ -168,7 +173,7 @@ class Ui_Form(object):
         self.label_6.setText(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Email and Browser Results:</span></p></body></html>"))
         self.label_7.setText(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600; text-decoration: underline;\">Optional Components</span></p></body></html>"))
         self.checkBox_2.setToolTip(_translate("Form", "chrome browser only for now"))
-        self.checkBox_2.setText(_translate("Form", "Scan Browser Stored Data"))
+        self.checkBox_2.setText(_translate("Form", "Scan Browser Data"))
         self.label_8.setText(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600; text-decoration: underline;\">Data Type:</span></p></body></html>"))
         self.checkBox_3.setText(_translate("Form", "SSN"))
         self.checkBox_4.setText(_translate("Form", "CCN"))
@@ -383,7 +388,8 @@ class Ui_Form(object):
 	
     def scanEmail(self, date):
         ourdate=date.toString()
-        os.system("outlook_grabber.py %s" % ourdate)
+        emailheader=""
+        os.system("py outlook_grabber.py %s" % ourdate)
         clear2=open("found_data.txt","w")
         clear2.close()
         #Popen("python outlook_grabber.py " + ourdate, shell=True).wait()
@@ -395,11 +401,13 @@ class Ui_Form(object):
         for eachline in f.readlines():
             
             if "Date:" in eachline:	
-                emailheader=eachline
+                emailheader=eachline        
+            
 			
             if self.SSN_checked():
                 #SSN LOOKUP
                 found1=re.search(r'\d\d\d-\d\d-\d\d\d\d', eachline) 
+                found1=re.search(r'\d\d\d\d\d\d\d\d\d', eachline) 
             else:
                 found1=False			
             if self.CCN_checked():
@@ -421,15 +429,15 @@ class Ui_Form(object):
                 #self.listWidget.addItem(firstline)
             if found1:
                 self.listWidget.addItem(emailheader)
-                self.listWidget.addItem("SSN: " + eachline)
+                self.listWidget.addItem("Potential SSN: " + eachline)
                 g.write(eachline+"\n")
             if found2:
                 self.listWidget.addItem(emailheader)
-                self.listWidget.addItem("CCN: " + eachline)
+                self.listWidget.addItem("Potential CCN: " + eachline)
                 g.write(eachline+"\n")
             if found3:
                 self.listWidget.addItem(emailheader)
-                self.listWidget.addItem("PASSWORD: "+eachline)
+                self.listWidget.addItem("Potential Password: "+eachline)
                 g.write(eachline+"\n")
         f.close()
         g.close()
