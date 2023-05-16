@@ -382,7 +382,7 @@ class Ui_Form(object):
         else: 
             ssnchecked="!ssn"
         
-        os.system("sleuthclient.py %s %s %s %s" % (chosendirectory, ccnchecked, ssnchecked, passwordschecked))
+        os.system("py sleuthclient.py %s %s %s %s" % (chosendirectory, ccnchecked, ssnchecked, passwordschecked))
         #subprocess.Popen("py sleuthclient.py " + chosendirectory).wait()
         
 	
