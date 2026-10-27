@@ -1,6 +1,6 @@
 DLPSleuth - A lightweight, windows DLP client
 
-<image src="https://github.com/musicmancorley/DLPSleuth/blob/master/images/dlpsleuth.PNG?raw=true">
+<image src="https://github.com/g3tsyst3m/DLPSleuth/blob/master/images/dlpsleuth.PNG?raw=true">
 
 ## Prerequisites
 

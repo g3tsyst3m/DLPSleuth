@@ -464,7 +464,7 @@ def redoClicked():
     msg_box = QMessageBox()
     msg_box.setWindowTitle("Info")
     msg_box.setText('Thanks for trying out DLPSleuth!  I have much to add to this project as time permits, so consider this laying the foundation for things to come.\nIt is my aim to make this DLP client as simple and out-of-the-box ready as possible\nThe following file extensions are searched by default: txt,csv,pdf,xlsx,docx,doc,msg,ppt,xml,pptx \
-	\nIf you have questions or suggestions please feel free to shoot me an email at: musicmancorley@gmail.com or create an issue request on GitHub \
+	\nIf you have questions or suggestions please feel free to open an issue request on GitHub \
 	\nDonations are of course always welcome @ paypal.me/BriarIDS :) \
 	')
     msg_box.exec_()
